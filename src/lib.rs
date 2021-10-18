@@ -50,8 +50,7 @@ pub async fn main(req: Request, env: Env) -> Result<Response> {
             Response::error("Bad Request", 400)
         })
         .get("/worker-version", |_, ctx| {
-            let version = ctx.var("WORKERS_RS_VERSION")?.to_string();
-            Response::ok(version)
+            Response::ok(ctx.var("WORKERS_RS_VERSION")?.to_string())
         })
         .run(req, env)
         .await
