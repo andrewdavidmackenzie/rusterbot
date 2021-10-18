@@ -1,0 +1,26 @@
+name = "rusterbot"
+type = "javascript"
+account_id = "7c383e0fc073dce9fc1a6d69a1a66d3c"
+route = ""
+zone_id = ""
+workers_dev = true
+compatibility_date = "2021-10-18"
+compatibility_flags = [ "formdata_parser_supports_files" ] # required
+
+[vars]
+WORKERS_RS_VERSION = "0.0.6"
+
+[build]
+command = "cargo install -q worker-build && worker-build --release" # required
+
+[build.upload]
+dir    = "build/worker"
+format = "modules"
+main   = "./shim.mjs"
+
+[[build.upload.rules]]
+globs = ["**/*.wasm"]
+type  = "CompiledWasm"
+
+# read more about configuring your Worker via wrangler.toml at:
+# https://developers.cloudflare.com/workers/cli-wrangler/configuration
