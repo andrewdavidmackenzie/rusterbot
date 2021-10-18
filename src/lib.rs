@@ -30,6 +30,9 @@ pub async fn main(req: Request, env: Env) -> Result<Response> {
     // Environment bindings like KV Stores, Durable Objects, Secrets, and Variables.
     router
         .get("/", |_, _| Response::ok("Hello from Rusty Workers!"))
+        .get("/var", |_req, ctx| {
+            Response::ok(ctx.var("BUILD_NUMBER")?.to_string())
+        })
         .post_async("/form/:field", |mut req, ctx| async move {
             if let Some(name) = ctx.param("field") {
                 let form = req.form_data().await?;
